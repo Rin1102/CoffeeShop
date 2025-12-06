@@ -1,0 +1,707 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #D4A574;
+    --secondary-color: #8B7355;
+    --accent-color: #F4E4D7;
+    --text-dark: #333;
+    --text-light: #666;
+    --bg-light: #FFF9F3;
+    --white: #FFFFFF;
+    --primary-color-rgb: 212, 165, 116; 
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ----------------------------------------
+ * Styles de l'Entête (Header)
+ * ----------------------------------------
+ */
+header {
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    transition: color 0.3s;
+    position: relative;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--text-dark);
+    transition: color 0.3s;
+}
+
+.cart-icon:hover {
+    color: var(--primary-color);
+}
+
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* ----------------------------------------
+ * Styles du Corps (Menu, Filtres)
+ * ----------------------------------------
+ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+}
+
+.menu-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--white);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+}
+
+/* ----------------------------------------
+ * Styles des Sous-Filtres (Logique Visibilité)
+ * ----------------------------------------
+ */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem; 
+}
+
+/* Masqué par défaut */
+#patisserieSubFilters {
+    display: none; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background: rgba(var(--primary-color-rgb), 0.1); 
+    width: 100%; 
+    margin-top: 0.5rem;
+}
+
+/* Règle pour afficher */
+#patisserieSubFilters.visible {
+    display: flex; 
+}
+
+/* Styles des boutons de sous-filtres */
+.sub-filter-btn {
+    padding: 0.5rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.sub-filter-btn:hover,
+.sub-filter-btn.active-sub {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+/* ----------------------------------------
+ * Fin des Sous-Filtres
+ * ----------------------------------------
+ */
+
+
+.sort-controls {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sort-controls label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-right: 0.5rem;
+}
+
+.sort-controls select {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    background: white;
+    color: var(--text-dark);
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.sort-controls select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+}
+
+/* ----------------------------------------
+ * Styles de la Grille de Produits
+ * ----------------------------------------
+ */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    position: relative;
+    cursor: pointer; 
+}
+
+.product-card:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25); 
+}
+ 
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px; 
+    overflow: hidden; 
+}
+
+.product-image {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.1);
+    filter: brightness(0.6); 
+}
+
+/* EFFET DE SURVOL DYNAMIQUE */
+.product-extra-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--primary-color-rgb), 0.95); 
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    opacity: 0;
+    transform: translateY(100%); 
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    pointer-events: none; 
+}
+
+.product-card:hover .product-extra-info {
+    opacity: 1;
+    transform: translateY(0); 
+    pointer-events: auto; 
+}
+
+.product-extra-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent-color);
+}
+
+.full-description {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    max-height: 100px;
+    overflow-y: auto; 
+}
+
+.reviews {
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* ----------------------------------------
+ * Styles Standard de la Carte
+ * ----------------------------------------
+ */
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-description {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.add-to-cart {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 600;
+}
+
+.add-to-cart:hover {
+    background: var(--secondary-color);
+}
+
+
+/* ----------------------------------------
+ * Styles du Panier Modal (Cart Modal)
+ * ----------------------------------------
+ */
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    transition: right 0.3s;
+    z-index: 2000;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-modal.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.close-cart:hover {
+    transform: scale(1.2);
+}
+
+.cart-items {
+    padding: 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.cart-item-info div {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.cart-item-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.qty-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.qty-btn:hover {
+    background: var(--secondary-color);
+}
+
+.cart-item-controls span {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.cart-total {
+    padding: 1.5rem;
+    background: var(--accent-color);
+    text-align: center;
+    border-top: 2px solid #eee;
+    flex-shrink: 0;
+}
+
+.cart-total h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.cart-total span {
+    font-weight: 700;
+}
+
+/* NOUVEAUX STYLES POUR LA COMMANDE ET LA FACTURE */
+.checkout-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background: #4CAF50; /* Vert pour Valider/Payer */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.checkout-btn:hover {
+    background: #45a049;
+}
+
+/* Styles du Formulaire de Client */
+.customer-form-area {
+    padding: 1.5rem;
+    border-top: 1px solid #ddd;
+    background: var(--bg-light);
+    display: none; /* Masqué par défaut */
+    flex-shrink: 0;
+}
+
+.customer-form-area.visible {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.back-to-cart-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    background: #ccc;
+    color: var(--text-dark);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.back-to-cart-btn:hover {
+    background: #bbb;
+}
+
+/* Styles de la Zone de Facture */
+.invoice-area {
+    padding: 1.5rem;
+    border-top: 1px solid #ddd;
+    background: var(--bg-light);
+    display: none; /* Caché par défaut */
+    flex-shrink: 0;
+}
+
+.invoice-area.visible {
+    display: block;
+}
+
+.invoice-details {
+    padding: 1rem;
+    border: 1px dashed var(--secondary-color);
+    border-radius: 5px;
+    font-size: 0.95rem;
+}
+/* FIN NOUVEAUX STYLES */
+
+/* ----------------------------------------
+ * Styles du Pied de Page (Footer)
+ * ----------------------------------------
+ */
+footer {
+    background: var(--secondary-color);
+    color: white;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.footer-section p,
+.footer-section a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+
+.social-links a:hover {
+    transform: scale(1.15);
+}
+
+/* ----------------------------------------
+ * Media Queries (Réactivité)
+ * ----------------------------------------
+ */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-modal {
+        width: 100%;
+        right: -100%;
+    }
+
+    .menu-filters {
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .sort-controls {
+        font-size: 0.9rem;
+    }
+
+    .sort-controls select {
+        width: 100%;
+    }
+}
