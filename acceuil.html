@@ -11,10 +11,10 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">
+            <a href="acceuil.html" class="logo">
                 <img src="assets/logo.png" alt="Biscottino's Logo">
                 <span>Biscottino's</span>
-            </div>
+            </a>
             
             <!-- Hamburger Menu Button -->
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
@@ -104,21 +104,40 @@
         <!-- Values Section -->
         <section class="values" id="values">
             <h2>Nos Valeurs</h2>
+            <p class="values-subtitle">Ce qui fait de Biscottino's un lieu unique</p>
             <div class="values-grid">
                 <div class="value-item">
-                    <div class="value-icon">🌱</div>
+                    <div class="value-icon-wrapper">
+                        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
                     <h3>Produits Locaux</h3>
                     <p>Nous privilégions les circuits courts et travaillons avec des producteurs de la région pour vous garantir fraîcheur et qualité.</p>
+                    <div class="value-badge">100% Local</div>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">😊</div>
+                    <div class="value-icon-wrapper">
+                        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
                     <h3>Service Amical</h3>
                     <p>Notre équipe passionnée est à votre écoute pour vous offrir une expérience personnalisée et chaleureuse.</p>
+                    <div class="value-badge">À votre écoute</div>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">🏡</div>
+                    <div class="value-icon-wrapper">
+                        <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
                     <h3>Ambiance Conviviale</h3>
                     <p>Un espace confortable et accueillant où vous vous sentirez comme chez vous, parfait pour travailler ou se détendre.</p>
+                    <div class="value-badge">Chez vous</div>
                 </div>
             </div>
         </section>
@@ -137,12 +156,37 @@
             <h2>Votre Commande</h2>
             <button class="close-cart" onclick="toggleCart()" aria-label="Close cart">✕</button>
         </div>
+        
         <div class="cart-items" id="cartItems">
             <p style="text-align: center; color: #999; padding: 2rem;">Votre panier est vide</p>
         </div>
+        
         <div class="cart-total">
             <h3>Total: <span id="cartTotal">0.00</span> €</h3>
-            <button class="checkout-btn" onclick="proceedToCheckout()">Commander</button>
+            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">Passer la commande</button>
+        </div>
+
+        <div id="customerFormArea" class="customer-form-area">
+            <h4>Veuillez entrer vos coordonnées:</h4>
+            <form id="customerForm" onsubmit="event.preventDefault(); processOrder()">
+                <div class="form-group">
+                    <label for="name">Nom Complet:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse (optionnel):</label>
+                    <input type="text" id="address">
+                </div>
+                <button type="submit" class="checkout-btn">Confirmer la commande</button>
+                <button type="button" class="back-to-cart-btn" onclick="renderCartItems()">Retour au panier</button>
+            </form>
+        </div>
+
+        <div id="invoiceArea" class="invoice-area">
         </div>
     </div>
 
@@ -169,7 +213,11 @@
                         <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
                     <a href="#" title="Instagram" aria-label="Instagram">
-                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="17.5" cy="6.5" r="1.5"/>
+                        </svg>
                     </a>
                     <a href="#" title="Twitter" aria-label="Twitter">
                         <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>

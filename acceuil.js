@@ -1,76 +1,42 @@
-// Cart Management
+// Cart Management with localStorage sync
 var cart = [];
+let customerDetails = {};
 
-// Initialize cart from memory (not localStorage as it's not supported)
+// Initialize cart from localStorage
 function initCart() {
-    updateCart();
+    const savedCart = localStorage.getItem('biscottinos_cart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+    updateCartDisplay();
 }
 
-function updateCart() {
-    var cartCount = document.getElementById('cartCount');
-    var cartItems = document.getElementById('cartItems');
-    var cartTotal = document.getElementById('cartTotal');
-    
-    if (!cartCount || !cartItems || !cartTotal) return;
-    
-    var totalItems = 0;
-    for (var i = 0; i < cart.length; i++) {
-        totalItems += cart[i].quantity;
-    }
-    cartCount.textContent = totalItems;
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Votre panier est vide</p>';
-    } else {
-        var html = '';
-        for (var i = 0; i < cart.length; i++) {
-            var item = cart[i];
-            html += '<div class="cart-item">';
-            html += '<div class="cart-item-info">';
-            html += '<strong>' + item.name + '</strong>';
-            html += '<div>' + item.price.toFixed(2) + ' € × ' + item.quantity + '</div>';
-            html += '</div>';
-            html += '<div class="cart-item-controls">';
-            html += '<button class="qty-btn" onclick="updateQuantity(' + item.id + ', -1)">-</button>';
-            html += '<span>' + item.quantity + '</span>';
-            html += '<button class="qty-btn" onclick="updateQuantity(' + item.id + ', 1)">+</button>';
-            html += '<button class="qty-btn" onclick="removeFromCart(' + item.id + ')" style="background: #d32f2f;">×</button>';
-            html += '</div>';
-            html += '</div>';
-        }
-        cartItems.innerHTML = html;
-    }
-    
-    var total = 0;
-    for (var i = 0; i < cart.length; i++) {
-        total += cart[i].price * cart[i].quantity;
-    }
-    cartTotal.textContent = total.toFixed(2);
+// Save cart to localStorage
+function saveCart() {
+    localStorage.setItem('biscottinos_cart', JSON.stringify(cart));
 }
 
-function removeFromCart(productId) {
-    var newCart = [];
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].id !== productId) {
-            newCart.push(cart[i]);
-        }
-    }
-    cart = newCart;
-    updateCart();
+// Update all cart displays
+function updateCartDisplay() {
+    updateCartCount();
+    calculateCartTotal();
 }
 
-function updateQuantity(productId, change) {
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].id === productId) {
-            cart[i].quantity += change;
-            if (cart[i].quantity <= 0) {
-                removeFromCart(productId);
-                return;
-            }
-            break;
-        }
+function updateCartCount() {
+    const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById('cartCount');
+    if (cartCountElement) {
+        cartCountElement.textContent = totalCount;
     }
-    updateCart();
+}
+
+function calculateCartTotal() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const cartTotalElement = document.getElementById('cartTotal');
+    if (cartTotalElement) {
+        cartTotalElement.textContent = total.toFixed(2);
+    }
+    return total;
 }
 
 function toggleCart() {
@@ -79,15 +45,207 @@ function toggleCart() {
         cartModal.classList.remove('open');
     } else {
         cartModal.classList.add('open');
+        renderCartItems();
     }
 }
 
-function proceedToCheckout() {
+function renderCartItems() {
+    var cartItemsContainer = document.getElementById('cartItems');
+    var invoiceArea = document.getElementById('invoiceArea');
+    var checkoutBtn = document.getElementById('checkoutBtn');
+    var customerFormArea = document.getElementById('customerFormArea');
+    
+    if (!cartItemsContainer || !invoiceArea || !checkoutBtn || !customerFormArea) return;
+    
+    // Hide alternative views
+    invoiceArea.classList.remove('visible');
+    customerFormArea.classList.remove('visible');
+    
+    // Show cart view
+    cartItemsContainer.style.display = 'block';
+    checkoutBtn.style.display = 'block';
+    
+    cartItemsContainer.innerHTML = '';
+    
     if (cart.length === 0) {
-        alert('Votre panier est vide');
+        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Votre panier est vide</p>';
+        checkoutBtn.disabled = true;
+        updateCartDisplay();
         return;
     }
-    alert('Fonctionnalité de commande bientôt disponible!');
+    
+    checkoutBtn.disabled = false;
+    
+    cart.forEach(function(item) {
+        var itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = 
+            '<div class="cart-item-info">' +
+                '<strong>' + item.name + '</strong>' +
+                '<div>' + item.price.toFixed(2) + ' € x ' + item.quantity + ' = ' + (item.price * item.quantity).toFixed(2) + ' €</div>' +
+            '</div>' +
+            '<div class="cart-item-controls">' +
+                '<button class="qty-btn" onclick="updateQuantity(' + item.id + ', -1)">-</button>' +
+                '<span>' + item.quantity + '</span>' +
+                '<button class="qty-btn" onclick="updateQuantity(' + item.id + ', 1)">+</button>' +
+            '</div>';
+        cartItemsContainer.appendChild(itemElement);
+    });
+    
+    updateCartDisplay();
+    
+    var form = document.getElementById('customerForm');
+    if (form) form.reset();
+}
+
+function addToCart(productId, productName, productPrice) {
+    const cartItem = cart.find(item => item.id === productId);
+
+    if (cartItem) {
+        cartItem.quantity += 1;
+    } else {
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            quantity: 1
+        });
+    }
+
+    saveCart();
+    updateCartDisplay();
+    
+    // Show brief feedback
+    const cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+        cartIcon.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            cartIcon.style.transform = 'scale(1)';
+        }, 200);
+    }
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCart();
+    renderCartItems();
+}
+
+function updateQuantity(productId, change) {
+    const cartItemIndex = cart.findIndex(item => item.id === productId);
+
+    if (cartItemIndex > -1) {
+        const item = cart[cartItemIndex];
+        item.quantity += change;
+
+        if (item.quantity <= 0) {
+            cart.splice(cartItemIndex, 1);
+        }
+    }
+    
+    saveCart();
+    renderCartItems();
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Votre panier est vide. Veuillez ajouter des articles avant de commander.");
+        return;
+    }
+    
+    // Save cart snapshot for invoice
+    window.tempCartForInvoice = JSON.stringify(cart);
+    
+    document.getElementById('cartItems').style.display = 'none';
+    document.getElementById('checkoutBtn').style.display = 'none';
+    
+    var total = calculateCartTotal();
+    document.getElementById('cartTotal').textContent = total.toFixed(2);
+    
+    document.getElementById('customerFormArea').classList.add('visible');
+}
+
+function processOrder() {
+    var name = document.getElementById('name').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var address = document.getElementById('address').value.trim();
+    
+    if (!name || !phone) {
+        alert("Veuillez remplir votre nom complet et votre numéro de téléphone.");
+        return;
+    }
+    
+    customerDetails = { name: name, phone: phone, address: address };
+    
+    document.getElementById('customerFormArea').classList.remove('visible');
+    
+    generateInvoice();
+    
+    // Clear cart after order
+    cart = [];
+    saveCart();
+    updateCartDisplay();
+    
+    alert("Commande enregistrée ! Vous pouvez consulter la facture ci-dessous.");
+}
+
+function generateInvoice() {
+    var invoiceArea = document.getElementById('invoiceArea');
+    
+    var itemsToInvoice = JSON.parse(window.tempCartForInvoice || '[]');
+    var customer = customerDetails;
+    
+    if (itemsToInvoice.length === 0) {
+        invoiceArea.innerHTML = '<p style="padding: 2rem; text-align: center; color: red;">Erreur: Impossible de trouver les articles pour la facture.</p>';
+        invoiceArea.classList.add('visible');
+        window.tempCartForInvoice = null;
+        return;
+    }
+    
+    var finalTotal = 0;
+    for (var i = 0; i < itemsToInvoice.length; i++) {
+        finalTotal += itemsToInvoice[i].price * itemsToInvoice[i].quantity;
+    }
+    
+    var invoiceContent = 
+        '<div class="invoice-details">' +
+            '<h4>Confirmation de Commande #' + Math.floor(Math.random() * 10000) + '</h4>' +
+            '<p>Date et Heure: ' + new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'medium' }) + '</p>' +
+            '<hr style="margin: 0.75rem 0; border-color: #ddd;">' +
+            '<h5>Détails du Client:</h5>' +
+            '<p><strong>Nom:</strong> ' + customer.name + '</p>' +
+            '<p><strong>Tél:</strong> ' + customer.phone + '</p>';
+    
+    if (customer.address) {
+        invoiceContent += '<p><strong>Adresse:</strong> ' + customer.address + '</p>';
+    }
+    
+    invoiceContent += 
+        '<hr style="margin: 0.75rem 0; border-color: #ddd;">' +
+        '<h5>Détail des Articles :</h5>' +
+        '<ul style="padding-left: 0;">';
+    
+    for (var i = 0; i < itemsToInvoice.length; i++) {
+        var item = itemsToInvoice[i];
+        invoiceContent += 
+            '<li style="list-style: none; padding: 0.2rem 0; display: flex; justify-content: space-between;">' +
+                '<span>' + item.name + ' (x' + item.quantity + ')</span>' +
+                '<span>' + (item.price * item.quantity).toFixed(2) + ' €</span>' +
+            '</li>';
+    }
+    
+    invoiceContent += 
+        '</ul>' +
+        '<hr style="margin: 0.75rem 0; border-color: var(--secondary-color);">' +
+        '<h5 style="text-align: right; color: var(--primary-color);">Total Payé: ' + finalTotal.toFixed(2) + ' €</h5>' +
+        '<p style="margin-top: 1rem; text-align: center; font-style: italic;">Merci de votre confiance ! Votre commande est en cours de préparation.</p>' +
+        '<button class="checkout-btn" onclick="toggleCart()" style="background: linear-gradient(135deg, var(--secondary-color), #2a3570); margin-top: 1.5rem;">Fermer la facture</button>' +
+        '</div>';
+    
+    invoiceArea.innerHTML = invoiceContent;
+    invoiceArea.classList.add('visible');
+    
+    window.tempCartForInvoice = null;
 }
 
 // Mobile Menu Toggle
@@ -203,7 +361,6 @@ function initSmoothScroll() {
                     block: 'start'
                 });
                 
-                // Close mobile menu if open
                 var nav = document.getElementById('mainNav');
                 var menuToggle = document.querySelector('.menu-toggle');
                 if (nav && menuToggle) {
