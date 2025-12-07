@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café Local - Contact</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Biscottino's - Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="contact.css">
     <script src="contact.js" defer></script>
-   
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z"/>
-                </svg>
-                Café Local
-            </div>
-            <nav>
+            <a href="acceuil.html" class="logo">
+                <img src="assets/logo.png" alt="Biscottino's Logo">
+                <span>Biscottino's</span>
+            </a>
+            
+            <!-- Hamburger Menu Button -->
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav id="mainNav">
                 <ul>
                     <li><a href="acceuil.html">Accueil</a></li>
                     <li><a href="menu.html">Menu</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
                 </ul>
             </nav>
-             <div class="cart-icon" onclick="window.location.href='menu.html'">
+            
+            <div class="cart-icon" onclick="toggleCart()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -40,13 +46,14 @@
         <h1 class="page-title">Contactez-nous</h1>
         
         <div class="contact-wrapper">
+            <!-- Contact Form Section -->
             <div class="contact-form-section">
                 <div id="confirmationMessage" class="confirmation-message">
                     Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.
                 </div>
                 
                 <h2>Envoyez-nous un message</h2>
-                <div id="contactForm">
+                <form id="contactForm" onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <label for="name">Nom complet *</label>
                         <input type="text" id="name" name="name" placeholder="Votre nom">
@@ -65,125 +72,101 @@
                         <div class="error-message">Veuillez entrer votre message</div>
                     </div>
 
-                    <button type="submit" class="submit-btn" onclick="handleSubmit(event)">Envoyer le message</button>
-                </div>
+                    <button type="submit" class="submit-btn">Envoyer le message</button>
+                </form>
             </div>
 
-            <div class="contact-info-section">
-                <div class="info-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        Notre adresse
-                    </h3>
-                    <div class="info-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <div>
-                            <strong>123 Rue de la République</strong><br>
-                            Tunis, Tunisie
-                        </div>
-                    </div>
+            <!-- Map Section -->
+            <div class="map-section">
+                <h2>Où nous trouver</h2>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.2955546054674!2d10.826353176401536!3d35.76811562519528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130213004318c027%3A0xa09632d8a8f9a43c!2sTamaris%20Coffee%20Shop!5e0!3m2!1sfr!2stn!4v1765037750615!5m2!1sfr!2stn" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
-
-                <div class="info-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                        </svg>
-                        Contact
-                    </h3>
-                    <div class="info-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <div>
-                            <strong>Téléphone:</strong><br>
-                            +216 71 123 456
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        <div>
-                            <strong>Email:</strong><br>
-                            contact@cafelocal.tn
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        Horaires d'ouverture
-                    </h3>
-                    <div class="info-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                        </svg>
-                        <div>
-                            <strong>Lundi - Vendredi</strong><br>
-                            7h00 - 20h00<br><br>
-                            <strong>Samedi - Dimanche</strong><br>
-                            8h00 - 22h00
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-                <div class="map-section">
-            <h2>Où nous trouver</h2>
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.2955546054674!2d10.826353176401536!3d35.76811562519528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130213004318c027%3A0xa09632d8a8f9a43c!2sTamaris%20Coffee%20Shop!5e0!3m2!1sfr!2stn!4v1765037750615!5m2!1sfr!2stn" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
             </div>
         </div>
     </div>
 
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-header">
+            <h2>Votre Commande</h2>
+            <button class="close-cart" onclick="toggleCart()" aria-label="Close cart">✕</button>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: #999; padding: 2rem;">Votre panier est vide</p>
+        </div>
+        
+        <div class="cart-total">
+            <h3>Total: <span id="cartTotal">0.00</span> €</h3>
+            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">Passer la commande</button>
+        </div>
+
+        <div id="customerFormArea" class="customer-form-area">
+            <h4>Veuillez entrer vos coordonnées:</h4>
+            <form id="customerForm" onsubmit="event.preventDefault(); processOrder()">
+                <div class="form-group">
+                    <label for="cart-name">Nom Complet:</label>
+                    <input type="text" id="cart-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cart-phone">Téléphone:</label>
+                    <input type="tel" id="cart-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cart-address">Adresse (optionnel):</label>
+                    <input type="text" id="cart-address">
+                </div>
+                <button type="submit" class="checkout-btn">Confirmer la commande</button>
+                <button type="button" class="back-to-cart-btn" onclick="renderCartItems()">Retour au panier</button>
+            </form>
+        </div>
+
+        <div id="invoiceArea" class="invoice-area">
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Café Local</h3>
-                <p>Votre café de quartier préféré</p>
-                <p>Ouvert tous les jours</p>
+                <h3>Biscottino's</h3>
+                <p>Votre café de quartier préféré au cœur de Monastir</p>
+                <p>Ouvert tous les jours pour vous servir</p>
             </div>
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p>📍 123 Rue de la République, Tunis</p>
+                <p>📍 Monastir, Tunisie</p>
                 <p>📞 +216 71 123 456</p>
-                <p>✉️ contact@cafelocal.tn</p>
+                <p>✉️ contact@biscottinos.tn</p>
             </div>
             <div class="footer-section">
                 <h3>Horaires</h3>
                 <p>Lundi - Vendredi: 7h - 20h</p>
                 <p>Samedi - Dimanche: 8h - 22h</p>
-                <div class="social-links">
-                    <a href="#" title="Facebook">
+                 <div class="social-links">
+                    <a href="https://www.facebook.com/biscottinos/?locale=fr_FR" title="Facebook" aria-label="Facebook" target="_blank">
                         <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
-                    <a href="#" title="Instagram">
-                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                    <a href="https://www.instagram.com/biscottino_s/?hl=fr" title="Instagram" aria-label="Instagram" target="_blank">
+                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="17.5" cy="6.5" r="1.5"/>
+                        </svg>
                     </a>
-                    <a href="#" title="Twitter">
-                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                    </a>
+                    
                 </div>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Biscottino's. Tous droits réservés.</p>
+        </div>
     </footer>
-
-   
 </body>
 </html>
