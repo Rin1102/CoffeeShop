@@ -82,7 +82,7 @@ function renderCartItems() {
         itemElement.innerHTML = 
             '<div class="cart-item-info">' +
                 '<strong>' + item.name + '</strong>' +
-                '<div>' + item.price.toFixed(2) + ' € x ' + item.quantity + ' = ' + (item.price * item.quantity).toFixed(2) + ' €</div>' +
+                '<div>' + item.price.toFixed(2) + ' DT x ' + item.quantity + ' = ' + (item.price * item.quantity).toFixed(2) + ' DT</div>' +
             '</div>' +
             '<div class="cart-item-controls">' +
                 '<button class="qty-btn" onclick="updateQuantity(' + item.id + ', -1)">-</button>' +
@@ -230,14 +230,14 @@ function generateInvoice() {
         invoiceContent += 
             '<li style="list-style: none; padding: 0.2rem 0; display: flex; justify-content: space-between;">' +
                 '<span>' + item.name + ' (x' + item.quantity + ')</span>' +
-                '<span>' + (item.price * item.quantity).toFixed(2) + ' €</span>' +
+                '<span>' + (item.price * item.quantity).toFixed(2) + ' DT</span>' +
             '</li>';
     }
     
     invoiceContent += 
         '</ul>' +
         '<hr style="margin: 0.75rem 0; border-color: var(--secondary-color);">' +
-        '<h5 style="text-align: right; color: var(--primary-color);">Total Payé: ' + finalTotal.toFixed(2) + ' €</h5>' +
+        '<h5 style="text-align: right; color: var(--primary-color);">Total Payé: ' + finalTotal.toFixed(2) + ' DT /h5>' +
         '<p style="margin-top: 1rem; text-align: center; font-style: italic;">Merci de votre confiance ! Votre commande est en cours de préparation.</p>' +
         '<button class="checkout-btn" onclick="toggleCart()" style="background: linear-gradient(135deg, var(--secondary-color), #2a3570); margin-top: 1.5rem;">Fermer la facture</button>' +
         '</div>';
