@@ -413,10 +413,24 @@ function initAnimations() {
 }
 
 // CTA Button Ripple Effect
+// CTA Button Effects (Hover + Ripple)
 function initCTAEffects() {
     var ctaButton = document.querySelector('.cta-button');
     
     if (ctaButton) {
+        // ✅ MOUSEENTER - Change color and enlarge
+        ctaButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.08)';
+            this.style.boxShadow = '0 10px 30px rgba(74, 68, 189, 0.5)';
+        });
+        
+        // ✅ MOUSELEAVE - Reset to original state
+        ctaButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 5px 15px rgba(74, 68, 189, 0.3)';
+        });
+        
+        // Click event for ripple effect (keep your existing code)
         ctaButton.addEventListener('click', function(e) {
             var rect = this.getBoundingClientRect();
             var x = e.clientX - rect.left;
