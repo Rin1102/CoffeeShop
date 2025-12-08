@@ -23,6 +23,8 @@ function updateCartDisplay() {
 }
 
 function updateCartCount() {
+    //reduce() est une méthode JavaScript qui réduit un tableau à une seule valeur
+    //  en appliquant une fonction sur chaque élément.
     const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
     const cartCountElement = document.getElementById('cartCount');
     if (cartCountElement) {
@@ -40,15 +42,19 @@ function calculateCartTotal() {
 }
 
 function toggleCart() {
+    // 1. Récupère l'élément HTML du panier modal
     var cartModal = document.getElementById('cartModal');
+    
+    // 2. Vérifie si le panier est déjà ouvert
     if (cartModal.classList.contains('open')) {
+        // Si OUI → Ferme le panier en retirant la classe 'open'
         cartModal.classList.remove('open');
     } else {
-        cartModal.classList.add('open');
-        renderCartItems();
+        // Si NON → Ouvre le panier
+        cartModal.classList.add('open');      // Ajoute la classe 'open' (animation d'ouverture)
+        renderCartItems();                     // Affiche les articles du panier
     }
 }
-
 function renderCartItems() {
     var cartItemsContainer = document.getElementById('cartItems');
     var invoiceArea = document.getElementById('invoiceArea');
