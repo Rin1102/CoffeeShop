@@ -129,9 +129,9 @@ nav a::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0;
+    width: 0; /* hidden by default */
     height: 2px;
-    background: var(--primary-color);
+    background: var(--primary-color); /* blue line */
     transition: width 0.3s ease;
 }
 
@@ -142,7 +142,7 @@ nav a.active {
 
 nav a:hover::after,
 nav a.active::after {
-    width: 100%;
+    width: 100%; /* shows the underline */
 }
 
 .cart-icon {

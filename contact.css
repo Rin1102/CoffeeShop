@@ -1,9 +1,17 @@
+/* ========================================
+   GLOBAL RESET & BASE STYLES
+   Removes default browser styling and sets box-sizing
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ========================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   Defines reusable color, shadow, and transition values
+   ======================================== */
 :root {
     --primary-color: #4a44bd;
     --secondary-color: #3a4899;
@@ -18,6 +26,10 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ========================================
+   BODY & TYPOGRAPHY
+   Sets default font family, colors, and text rendering
+   ======================================== */
 body {
     font-family: 'Open Sans', sans-serif;
     color: var(--text-dark);
@@ -30,7 +42,10 @@ h1, h2, h3 {
     font-family: 'Roboto', sans-serif;
 }
 
-/* ===== HEADER STYLES ===== */
+/* ========================================
+   HEADER SECTION
+   Sticky header with navigation and cart icon
+   ======================================== */
 header {
     background: var(--white);
     box-shadow: var(--shadow-sm);
@@ -40,6 +55,7 @@ header {
     transition: var(--transition);
 }
 
+/* Header content container - centers and spaces header elements */
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -49,6 +65,10 @@ header {
     padding: 1rem 2rem;
 }
 
+/* ========================================
+   LOGO SECTION
+   Brand logo with image and hover effects
+   ======================================== */
 .logo {
     display: flex;
     align-items: center;
@@ -68,13 +88,17 @@ header {
     transition: transform 0.3s;
 }
 
+/* Logo image rotation and scale effect on hover */
 .logo:hover img {
     transform: rotate(5deg) scale(1.05);
 }
 
-/* Hamburger Menu Button */
+/* ========================================
+   HAMBURGER MENU BUTTON (MOBILE)
+   Three-line menu icon that transforms to X when active
+   ======================================== */
 .menu-toggle {
-    display: none;
+    display: none; /* Hidden on desktop */
     flex-direction: column;
     gap: 5px;
     background: none;
@@ -92,6 +116,7 @@ header {
     transition: var(--transition);
 }
 
+/* Hamburger animation: transforms to X when menu is open */
 .menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(7px, 7px);
 }
@@ -104,6 +129,10 @@ header {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* ========================================
+   NAVIGATION MENU
+   Horizontal navigation with hover effects and active states
+   ======================================== */
 nav ul {
     display: flex;
     list-style: none;
@@ -120,10 +149,12 @@ nav a {
     padding: 0.5rem 0;
 }
 
+/* Active navigation link styling */
 nav a.active {
     color: var(--primary-color);
 }
 
+/* Animated underline effect for navigation links */
 nav a::after {
     content: '';
     position: absolute;
@@ -140,11 +171,16 @@ nav a.active {
     color: var(--primary-color);
 }
 
+/* Expands underline on hover or when active */
 nav a:hover::after,
 nav a.active::after {
     width: 100%;
 }
 
+/* ========================================
+   CART ICON
+   Shopping cart icon with item count badge
+   ======================================== */
 .cart-icon {
     position: relative;
     cursor: pointer;
@@ -156,6 +192,7 @@ nav a.active::after {
     transform: scale(1.1);
 }
 
+/* Cart item count badge - circular indicator with pulsing animation */
 .cart-count {
     position: absolute;
     top: -2px;
@@ -173,18 +210,26 @@ nav a.active::after {
     animation: pulse 2s infinite;
 }
 
+/* Pulsing animation for cart count badge */
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ========================================
+   MAIN CONTENT CONTAINER
+   Centers page content with max-width and padding
+   ======================================== */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 4rem 2rem;
 }
 
+/* ========================================
+   PAGE TITLE
+   Large centered heading for page sections
+   ======================================== */
 .page-title {
     text-align: center;
     font-size: 2.5rem;
@@ -192,6 +237,10 @@ nav a.active::after {
     margin-bottom: 3rem;
 }
 
+/* ========================================
+   CONTACT PAGE LAYOUT
+   Two-column grid layout for form and map sections
+   ======================================== */
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -199,7 +248,10 @@ nav a.active::after {
     margin-bottom: 3rem;
 }
 
-/* ===== CONTACT FORM SECTION ===== */
+/* ========================================
+   CONTACT FORM SECTION
+   Form container with card styling and hover effects
+   ======================================== */
 .contact-form-section {
     background: white;
     padding: 2.5rem;
@@ -208,6 +260,7 @@ nav a.active::after {
     transition: var(--transition);
 }
 
+/* Lift effect on hover */
 .contact-form-section:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
@@ -219,6 +272,10 @@ nav a.active::after {
     font-size: 1.8rem;
 }
 
+/* ========================================
+   FORM INPUT GROUPS
+   Individual form fields with labels and inputs
+   ======================================== */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -243,6 +300,7 @@ nav a.active::after {
     background: var(--bg-light);
 }
 
+/* Focus state for form inputs - adds border glow */
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
@@ -256,6 +314,10 @@ nav a.active::after {
     min-height: 150px;
 }
 
+/* ========================================
+   FORM VALIDATION STYLES
+   Error messages and styling for invalid inputs
+   ======================================== */
 .error-message {
     color: #d32f2f;
     font-size: 0.875rem;
@@ -264,23 +326,30 @@ nav a.active::after {
     font-weight: 500;
 }
 
+/* Error state styling for form fields */
 .form-group.error input,
 .form-group.error textarea {
     border-color: #d32f2f;
     background: #ffebee;
 }
 
+/* Shows error message with shake animation */
 .form-group.error .error-message {
     display: block;
     animation: shake 0.5s;
 }
 
+/* Shake animation for error fields */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
 
+/* ========================================
+   SUBMIT BUTTON
+   Form submission button with gradient and hover effects
+   ======================================== */
 .submit-btn {
     width: 100%;
     padding: 1.2rem;
@@ -304,6 +373,10 @@ nav a.active::after {
     transform: translateY(-1px);
 }
 
+/* ========================================
+   CONFIRMATION MESSAGE
+   Success message shown after form submission
+   ======================================== */
 .confirmation-message {
     display: none;
     background: linear-gradient(135deg, #4caf50, #45a049);
@@ -316,6 +389,7 @@ nav a.active::after {
     box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
 }
 
+/* Shows confirmation with slide-down animation */
 .confirmation-message.show {
     display: block;
     animation: slideDown 0.5s ease-out;
@@ -332,7 +406,10 @@ nav a.active::after {
     }
 }
 
-/* ===== MAP SECTION ===== */
+/* ========================================
+   MAP SECTION
+   Embedded Google Maps container with card styling
+   ======================================== */
 .map-section {
     background: white;
     padding: 2.5rem;
@@ -353,6 +430,7 @@ nav a.active::after {
     text-align: center;
 }
 
+/* Map iframe container with fixed height */
 .map-container {
     width: 100%;
     height: 450px;
@@ -367,11 +445,14 @@ nav a.active::after {
     border: none;
 }
 
-/* ===== CART MODAL ===== */
+/* ========================================
+   CART MODAL (SIDEBAR)
+   Slide-out shopping cart panel from right side
+   ======================================== */
 .cart-modal {
     position: fixed;
     top: 0;
-    right: -400px;
+    right: -400px; /* Hidden off-screen by default */
     width: 400px;
     height: 100%;
     background: white;
@@ -383,10 +464,15 @@ nav a.active::after {
     flex-direction: column;
 }
 
+/* Slides cart into view */
 .cart-modal.open {
     right: 0;
 }
 
+/* ========================================
+   CART HEADER
+   Top section of cart with title and close button
+   ======================================== */
 .cart-header {
     padding: 1.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -400,6 +486,7 @@ nav a.active::after {
     z-index: 10;
 }
 
+/* Close button with rotation animation on hover */
 .close-cart {
     background: none;
     border: none;
@@ -414,6 +501,10 @@ nav a.active::after {
     transform: rotate(90deg);
 }
 
+/* ========================================
+   CART ITEMS SECTION
+   Scrollable list of products in cart
+   ======================================== */
 .cart-items {
     padding: 1.5rem;
     flex: 1;
@@ -421,6 +512,7 @@ nav a.active::after {
     min-height: 200px;
 }
 
+/* Individual cart item with slide-in animation */
 .cart-item {
     display: flex;
     justify-content: space-between;
@@ -441,6 +533,10 @@ nav a.active::after {
     }
 }
 
+/* ========================================
+   CART ITEM DETAILS
+   Product name, price, and quantity information
+   ======================================== */
 .cart-item-info {
     flex: 1;
 }
@@ -456,6 +552,10 @@ nav a.active::after {
     color: var(--text-light);
 }
 
+/* ========================================
+   QUANTITY CONTROLS
+   Plus/minus buttons to adjust item quantity
+   ======================================== */
 .cart-item-controls {
     display: flex;
     gap: 0.5rem;
@@ -486,6 +586,10 @@ nav a.active::after {
     font-weight: 600;
 }
 
+/* ========================================
+   CART TOTAL SECTION
+   Displays total price and checkout button
+   ======================================== */
 .cart-total {
     padding: 2rem 1.5rem;
     background: linear-gradient(135deg, rgba(175, 200, 253, 0.3), rgba(175, 200, 253, 0.5));
@@ -506,6 +610,10 @@ nav a.active::after {
     font-weight: 700;
 }
 
+/* ========================================
+   CHECKOUT BUTTON
+   Primary action button to proceed to checkout
+   ======================================== */
 .checkout-btn {
     width: 100%;
     padding: 1rem;
@@ -532,15 +640,19 @@ nav a.active::after {
     box-shadow: none;
 }
 
-/* Customer Form */
+/* ========================================
+   CUSTOMER FORM AREA
+   Checkout form for customer name and phone
+   ======================================== */
 .customer-form-area {
     padding: 1.5rem;
     border-top: 1px solid #ddd;
     background: var(--bg-light);
-    display: none;
+    display: none; /* Hidden by default */
     flex-shrink: 0;
 }
 
+/* Shows form when checkout is initiated */
 .customer-form-area.visible {
     display: block;
 }
@@ -578,6 +690,10 @@ nav a.active::after {
     box-shadow: 0 0 0 3px rgba(74, 68, 189, 0.1);
 }
 
+/* ========================================
+   BACK TO CART BUTTON
+   Returns user from checkout form to cart view
+   ======================================== */
 .back-to-cart-btn {
     width: 100%;
     padding: 1rem;
@@ -597,12 +713,15 @@ nav a.active::after {
     color: white;
 }
 
-/* Invoice Area */
+/* ========================================
+   INVOICE AREA
+   Final order summary after checkout completion
+   ======================================== */
 .invoice-area {
     padding: 1.5rem;
     border-top: 1px solid #ddd;
     background: var(--bg-light);
-    display: none;
+    display: none; /* Hidden by default */
     flex-shrink: 0;
 }
 
@@ -610,6 +729,7 @@ nav a.active::after {
     display: block;
 }
 
+/* Invoice details box with dashed border */
 .invoice-details {
     padding: 1.5rem;
     border: 2px dashed var(--primary-color);
@@ -629,13 +749,20 @@ nav a.active::after {
     margin-bottom: 0.5rem;
 }
 
-/* ===== FOOTER ===== */
+/* ========================================
+   FOOTER SECTION
+   Site footer with company info and links
+   ======================================== */
 footer {
     background: linear-gradient(135deg, var(--secondary-color), #2a3570);
     color: white;
     padding: 3rem 2rem 0;
 }
 
+/* ========================================
+   FOOTER CONTENT GRID
+   Three-column layout for footer sections
+   ======================================== */
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -660,11 +787,16 @@ footer {
     transition: var(--transition);
 }
 
+/* Footer link hover effect with left padding */
 .footer-section a:hover {
     color: white;
     padding-left: 5px;
 }
 
+/* ========================================
+   SOCIAL MEDIA LINKS
+   Circular icon buttons for social platforms
+   ======================================== */
 .social-links {
     display: flex;
     gap: 1rem;
@@ -689,6 +821,10 @@ footer {
     padding: 0;
 }
 
+/* ========================================
+   FOOTER BOTTOM
+   Copyright and legal information
+   ======================================== */
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem 0;
@@ -696,17 +832,24 @@ footer {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ========================================
+   RESPONSIVE DESIGN - TABLET & MOBILE
+   Media queries for screens 768px and below
+   ======================================== */
 @media (max-width: 768px) {
-    /* Header Mobile */
+    /* ========================================
+       MOBILE HEADER & NAVIGATION
+       Hamburger menu and slide-in navigation panel
+       ======================================== */
     .menu-toggle {
-        display: flex;
+        display: flex; /* Shows hamburger button */
     }
     
+    /* Navigation slides in from right side */
     nav {
         position: fixed;
         top: 0;
-        right: -100%;
+        right: -100%; /* Hidden off-screen */
         width: 80%;
         max-width: 300px;
         height: 100vh;
@@ -717,10 +860,12 @@ footer {
         padding-top: 5rem;
     }
     
+    /* Shows navigation when menu is active */
     nav.active {
         right: 0;
     }
     
+    /* Vertical stacked menu items */
     nav ul {
         flex-direction: column;
         gap: 0;
@@ -738,22 +883,27 @@ footer {
         font-size: 1.1rem;
     }
     
+    /* Removes underline animation on mobile */
     nav a::after {
         display: none;
     }
 
+    /* ========================================
+       MOBILE LAYOUT ADJUSTMENTS
+       Single-column layouts for smaller screens
+       ======================================== */
     .contact-wrapper {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Stacks form and map vertically */
         gap: 2rem;
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Stacks footer sections vertically */
         gap: 2rem;
     }
 
     .cart-modal {
-        width: 100%;
+        width: 100%; /* Full-width cart on mobile */
         right: -100%;
     }
 
@@ -770,6 +920,10 @@ footer {
     }
 }
 
+/* ========================================
+   RESPONSIVE DESIGN - SMALL MOBILE
+   Media queries for screens 480px and below
+   ======================================== */
 @media (max-width: 480px) {
     .page-title {
         font-size: 1.7rem;
