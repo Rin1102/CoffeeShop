@@ -6,7 +6,7 @@
 
 :root {
     --primary-color: #4a44bd;
-    --secondary-color: #3a4899;
+    --secondary-color: rgb(58, 72, 153);
     --accent-color: #afc8fd;
     --text-dark: #333;
     --text-light: #666;
