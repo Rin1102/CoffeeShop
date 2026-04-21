@@ -50,12 +50,6 @@ function render_header(PDO $pdo, string $title, string $activePage = ''): void
                 <li><a href="menu.php" class="<?= $activePage === 'menu' ? 'active' : '' ?>">Menu</a></li>
                 <li><a href="contact.php" class="<?= $activePage === 'contact' ? 'active' : '' ?>">Contact</a></li>
                 <?php if ($user): ?>
-                    <li>
-                        <a href="panier.php" class="panier-nav-link <?= $activePage === 'panier' ? 'active' : '' ?>" aria-label="Panier (<?= $count ?>)">
-                            <img src="assets/panier.png" alt="Panier" class="panier-nav-icon">
-                            <span class="panier-nav-count"><?= $count ?></span>
-                        </a>
-                    </li>
                     <li><a href="profile.php" class="<?= $activePage === 'profile' ? 'active' : '' ?>">Profil</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
@@ -64,6 +58,13 @@ function render_header(PDO $pdo, string $title, string $activePage = ''): void
                 <?php endif; ?>
             </ul>
         </nav>
+
+        <?php if ($user): ?>
+            <a href="panier.php" class="panier-nav-link header-panier-link <?= $activePage === 'panier' ? 'active' : '' ?>" aria-label="Panier (<?= $count ?>)">
+                <img src="assets/panier.png" alt="Panier" class="panier-nav-icon">
+                <span class="panier-nav-count"><?= $count ?></span>
+            </a>
+        <?php endif; ?>
     </div>
 </header>
 <main class="page-main">
