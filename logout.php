@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/inc/bootstrap.php';
+require_once __DIR__ . '/inc/config.php';
 
 $_SESSION = [];
 if (ini_get('session.use_cookies')) {

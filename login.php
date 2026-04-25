@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/inc/bootstrap.php';
+require_once __DIR__ . '/inc/config.php';
 require_once __DIR__ . '/inc/layout.php';
 
 if (is_logged_in()) {
